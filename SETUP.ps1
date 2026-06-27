@@ -621,6 +621,9 @@ if ($settingsContent -notmatch "MEDIA_ROOT") {
 if ($settingsContent -notmatch "LOGIN_URL") {
     Add-Content $settingsPath "LOGIN_URL = 'signin'"
 }
+if ($settingsContent -notmatch "AUTH_USER_MODEL") {
+    Add-Content $settingsPath "AUTH_USER_MODEL = '$AppName.UserModel'"
+}
 
 # -----------------------------
 # Step 11: Update urls.py
@@ -653,7 +656,10 @@ if settings.DEBUG:
 Write-Host "Creating models..." -ForegroundColor Cyan
 @"
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
+class UserModel(AbstractUser):
+    pass
 "@ | Set-Content "$AppName\models.py"
 
 Write-Host "Creating views..." -ForegroundColor Cyan
@@ -674,7 +680,7 @@ def signup(request):
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
         
-        if User.objects.filter(username=username).exists():
+        if UserModel.objects.filter(username=username).exists():
             messages.warning(request, 'This username already exists.')
             return redirect('signup')
 
@@ -682,7 +688,7 @@ def signup(request):
             messages.warning(request, 'Two passwords must be same.')
             return redirect('signup')
         
-        User.objects.create_user(
+        UserModel.objects.create_user(
             username = username,
             password = password
         )

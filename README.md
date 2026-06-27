@@ -7,7 +7,7 @@ param (
     [string]$RootFolder = "Contact Management System",
     [string]$ProjectName = "core",
     [string]$AppName = "myApp",
-    [string]$BasicModel = "Contacts",
+    [string]$BasicModel = "Contacts", # That you will create in future
     [string]$BasicModelLowerCase = "contacts",
     [string]$ProjectTitle = "Contact Management System"
 )

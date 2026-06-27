@@ -12,3 +12,10 @@ param (
     [string]$ProjectTitle = "Contact Management System"
 )
 ```
+
+# Super User Account
+```shell
+username = "admin"
+password = "1234"
+```
+

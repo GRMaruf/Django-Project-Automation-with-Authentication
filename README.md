@@ -1,4 +1,4 @@
-# Update Parameters According to Your Need
+# Change Parameters According to Your Need
 Django Project Automation with Authentication (using default User model)
 ```shell
 param (
@@ -9,6 +9,11 @@ param (
     [string]$BasicModelLowerCase = "contacts",
     [string]$ProjectTitle = "Contact Management System"
 )
+```
+
+# Run This Command to Allow Permission in Powershell
+```shell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 
 # Super User Account

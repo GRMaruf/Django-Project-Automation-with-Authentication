@@ -1,7 +1,5 @@
-# Django-Project-Automation-with-Authentication
-Django Project Automation with Authentication (using default User model)
-
 # Update Parameters According to Your Need
+Django Project Automation with Authentication (using default User model)
 ```shell
 param (
     [string]$RootFolder = "Contact Management System",

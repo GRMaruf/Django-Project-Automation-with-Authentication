@@ -603,9 +603,9 @@ $settingsPath = "$ProjectName\settings.py"
 
 # Add STATICFILES_DIRS
 $settingsContent = Get-Content $settingsPath
-if ($settingsContent -notmatch "STATIC_ROOT") {
-    Add-Content $settingsPath "STATIC_ROOT = BASE_DIR / 'staticfiles/'"
-}
+# if ($settingsContent -notmatch "STATIC_ROOT") {
+#     Add-Content $settingsPath "STATIC_ROOT = BASE_DIR / 'staticfiles/'"
+# }
 if ($settingsContent -notmatch "STATICFILES_DIRS") {
     Add-Content $settingsPath "STATICFILES_DIRS = [ BASE_DIR / 'static' ]"
 }
@@ -646,7 +646,7 @@ urlpatterns = [
 
 # Serve static and media files during development
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 "@ | Set-Content $urlsPath
 

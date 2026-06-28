@@ -1,12 +1,11 @@
 param (
-    [string]$RootFolder = "Contact Management System",
+    [string]$RootFolder = "Hold YOUR Project",
     [string]$ProjectName = "core",
     [string]$AppName = "myApp",
-    [string]$BasicModel = "Contacts",
-    [string]$BasicModelLowerCase = "contacts",
-    [string]$ProjectTitle = "Contact Management System"
+    [string]$BasicModel = "Projects",
+    [string]$BasicModelLowerCase = "projects",
+    [string]$ProjectTitle = "Hold YOUR Project"
 )
-
 
 # -----------------------------
 # ERROR: If There is Any Error
@@ -134,7 +133,7 @@ Write-Host "Creating templates and static folders..." -ForegroundColor Cyan
       </ul>
 
       <form class="d-flex" method="GET">
-        <input class="form-control me-2" type="search" name="search" placeholder="Search recipes..." value="{{ request.GET.search }}" />
+        <input class="form-control me-2" type="search" name="search" placeholder="Search $BasicModelLowerCase..." value="{{ request.GET.search }}" />
 
         <button class="btn btn-light" type="submit">Search</button>
       </form>
@@ -478,7 +477,7 @@ a{
 "@ | Set-Content "$AppName\templates\$AppName\index.html"
 
 # -----------------------------
-# Step 9: Create simple CSS
+# Step 7: Create simple CSS
 # -----------------------------
 @"
 body {
@@ -583,7 +582,7 @@ body {
 "@ | Set-Content "static\css\messages.css"
 
 # -----------------------------
-# Step 10: Update settings.py
+# Step 8: Update settings.py
 # -----------------------------
 Write-Host "Updating settings.py..." -ForegroundColor Cyan
 $settingsPath = "$ProjectName\settings.py"
@@ -626,7 +625,7 @@ if ($settingsContent -notmatch "AUTH_USER_MODEL") {
 }
 
 # -----------------------------
-# Step 11: Update urls.py
+# Step 9: Update urls.py
 # -----------------------------
 Write-Host "Updating urls.py..." -ForegroundColor Cyan
 $urlsPath = "$ProjectName\urls.py"
@@ -651,7 +650,7 @@ if settings.DEBUG:
 "@ | Set-Content $urlsPath
 
 # -----------------------------
-# Step 12: Create models, views and urls for Home page and authentication
+# Step 10: Create models, views and urls for Home page and authentication
 # -----------------------------
 Write-Host "Creating models..." -ForegroundColor Cyan
 @"
@@ -732,13 +731,14 @@ urlpatterns = [
 "@ | Set-Content "$AppName\urls.py"
 
 # -----------------------------
-# Step 13: Initial migrate
+# Step 11: Initial migrate
 # -----------------------------
 Write-Host "Running migrations..." -ForegroundColor Cyan
+python manage.py makemigrations
 python manage.py migrate
 
 # -----------------------------
-# Step 14: Create .gitignore
+# Step 12: Create .gitignore
 # -----------------------------
 @"
 .venv/
@@ -749,12 +749,12 @@ db.sqlite3
 "@ | Set-Content .gitignore
 
 # -----------------------------
-# Step 15: Save requirements
+# Step 13: Save requirements
 # -----------------------------
 pip freeze > requirements.txt
 
 # -----------------------------
-# Step 16: Create superuser
+# Step 14: Create superuser
 # -----------------------------
 Write-Host "Creating Django superuser..." -ForegroundColor Cyan
 
@@ -780,8 +780,9 @@ python create_superuser.py
 Remove-Item "create_superuser.py"
 
 # -----------------------------
-# Step 17: Run server
+# Step 15: Run server
 # -----------------------------
 Write-Host "`n[DONE] Basic Django project setup complete!" -ForegroundColor Green
+Start-Process code .
 Start-Process "http://127.0.0.1:8000/"
 python manage.py runserver
